@@ -1,11 +1,11 @@
 {
-  "name": "shuffle-by-album",
+  "name": "firebase-spotify-auth-bridge",
   "version": "1.0.0",
   "lockfileVersion": 3,
   "requires": true,
   "packages": {
     "": {
-      "name": "shuffle-by-album",
+      "name": "firebase-spotify-auth-bridge",
       "version": "1.0.0",
       "devDependencies": {
         "type-coverage": "^2.29.7",
