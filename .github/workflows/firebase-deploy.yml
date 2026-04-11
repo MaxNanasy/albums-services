@@ -23,6 +23,10 @@ jobs:
       - name: Install Firebase CLI
         run: npm install --global firebase-tools
 
+      - name: Install production dependencies
+        run: npm ci --production
+        working-directory: functions
+
       - name: Authenticate to Google Cloud (test)
         env:
           FIREBASE_SERVICE_ACCOUNT_TEST: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_TEST }}
@@ -49,6 +53,10 @@ jobs:
 
       - name: Install Firebase CLI
         run: npm install --global firebase-tools
+
+      - name: Install production dependencies
+        run: npm ci --production
+        working-directory: functions
 
       - name: Authenticate to Google Cloud (prod)
         env:
