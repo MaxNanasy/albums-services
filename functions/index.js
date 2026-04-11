@@ -19,4 +19,7 @@ function firebaseSpotifyAuthBridgeHandler(request) {
   throw new HttpsError('unimplemented', 'Not implemented');
 }
 
-export const firebaseSpotifyAuthBridge = onCall(firebaseSpotifyAuthBridgeHandler);
+export const firebaseSpotifyAuthBridge = onCall(
+  { invoker: 'public' },
+  firebaseSpotifyAuthBridgeHandler,
+);
