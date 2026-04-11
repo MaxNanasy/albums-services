@@ -1,5 +1,5 @@
 {
-  "name": "firebase-spotify-auth-bridge",
+  "name": "albums-functions",
   "version": "1.0.0",
   "private": true,
   "type": "module",
