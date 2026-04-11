@@ -1,7 +1,10 @@
 {
-  "name": "functions",
-  "description": "Cloud Functions for Firebase",
+  "name": "firebase-spotify-auth-bridge",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
   "scripts": {
+    "check": "scripts/check",
     "serve": "firebase emulators:start --only functions",
     "shell": "firebase functions:shell",
     "start": "npm run shell",
@@ -17,7 +20,14 @@
     "firebase-functions": "^7.0.0"
   },
   "devDependencies": {
-    "firebase-functions-test": "^3.4.1"
+    "firebase-functions-test": "^3.4.1",
+    "type-coverage": "^2.29.7",
+    "typescript": "^6.0.2"
   },
-  "private": true
+  "typeCoverage": {
+    "atLeast": 100,
+    "detail": true,
+    "strict": true,
+    "showRelativePath": true
+  }
 }
