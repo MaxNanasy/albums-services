@@ -6,6 +6,9 @@ on:
 jobs:
   tsc:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: functions
 
     steps:
       - name: Checkout
@@ -24,6 +27,9 @@ jobs:
 
   type-coverage:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: functions
 
     steps:
       - name: Checkout
