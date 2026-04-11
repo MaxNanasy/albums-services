@@ -1,7 +1,5 @@
-// @ts-check
-
 import { setGlobalOptions } from 'firebase-functions';
-import { onRequest } from 'firebase-functions/https';
+import { HttpsError, onCall } from 'firebase-functions/https';
 import * as logger from 'firebase-functions/logger';
 
 setGlobalOptions({
@@ -9,14 +7,16 @@ setGlobalOptions({
   region: 'us-west2',
 });
 
-/** @type {(request: import('firebase-functions/https').Request, response: import('express').Response<unknown, Record<string, unknown>>) => void} */
-const firebaseSpotifyAuthBridgeHandler = (request, response) => {
-  logger.info('firebaseSpotifyAuthBridge endpoint called', {
-    method: request.method,
-    path: request.path,
+/**
+ * @param {import('firebase-functions/https').CallableRequest<unknown>} request
+ * @returns {never}
+ */
+function firebaseSpotifyAuthBridgeHandler(request) {
+  logger.info('firebaseSpotifyAuthBridge callable called', {
+    uid: request.auth?.uid ?? null,
   });
 
-  response.status(501).send('Not implemented');
-};
+  throw new HttpsError('unimplemented', 'Not implemented');
+}
 
-export const firebaseSpotifyAuthBridge = onRequest(firebaseSpotifyAuthBridgeHandler);
+export const firebaseSpotifyAuthBridge = onCall(firebaseSpotifyAuthBridgeHandler);
