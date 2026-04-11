@@ -27,9 +27,7 @@ jobs:
         env:
           FIREBASE_SERVICE_ACCOUNT_TEST: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_TEST }}
         run: |
-          cat <<'EOF' > "$RUNNER_TEMP/gcp-test-service-account.json"
-          $FIREBASE_SERVICE_ACCOUNT_TEST
-          EOF
+          printf '%s' "$FIREBASE_SERVICE_ACCOUNT_TEST" > "$RUNNER_TEMP/gcp-test-service-account.json"
           echo "GOOGLE_APPLICATION_CREDENTIALS=$RUNNER_TEMP/gcp-test-service-account.json" >> "$GITHUB_ENV"
 
       - name: Deploy to test Firebase project
@@ -56,9 +54,7 @@ jobs:
         env:
           FIREBASE_SERVICE_ACCOUNT_PROD: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_PROD }}
         run: |
-          cat <<'EOF' > "$RUNNER_TEMP/gcp-prod-service-account.json"
-          $FIREBASE_SERVICE_ACCOUNT_PROD
-          EOF
+          printf '%s' "$FIREBASE_SERVICE_ACCOUNT_PROD" > "$RUNNER_TEMP/gcp-prod-service-account.json"
           echo "GOOGLE_APPLICATION_CREDENTIALS=$RUNNER_TEMP/gcp-prod-service-account.json" >> "$GITHUB_ENV"
 
       - name: Deploy to main Firebase project
