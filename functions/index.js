@@ -11,15 +11,15 @@ setGlobalOptions({
  * @param {import('firebase-functions/https').CallableRequest<unknown>} request
  * @returns {never}
  */
-function firebaseSpotifyAuthBridgeHandler(request) {
-  logger.info('firebaseSpotifyAuthBridge callable called', {
+function resolveFirebaseCustomTokenFromSpotifyAccessTokenHandler(request) {
+  logger.info('resolveFirebaseCustomTokenFromSpotifyAccessToken callable called', {
     uid: request.auth?.uid ?? null,
   });
 
   throw new HttpsError('unimplemented', 'Not implemented');
 }
 
-export const firebaseSpotifyAuthBridge = onCall(
+export const resolveFirebaseCustomTokenFromSpotifyAccessToken = onCall(
   { invoker: 'public' },
-  firebaseSpotifyAuthBridgeHandler,
+  resolveFirebaseCustomTokenFromSpotifyAccessTokenHandler,
 );
