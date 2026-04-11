@@ -23,9 +23,16 @@ jobs:
       - name: Install Firebase CLI
         run: npm install --global firebase-tools
 
-      - name: Deploy to test Firebase project
+      - name: Authenticate to Google Cloud (test)
         env:
-          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+          FIREBASE_SERVICE_ACCOUNT_TEST: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_TEST }}
+        run: |
+          cat <<'EOF' > "$RUNNER_TEMP/gcp-test-service-account.json"
+          $FIREBASE_SERVICE_ACCOUNT_TEST
+          EOF
+          echo "GOOGLE_APPLICATION_CREDENTIALS=$RUNNER_TEMP/gcp-test-service-account.json" >> "$GITHUB_ENV"
+
+      - name: Deploy to test Firebase project
         run: firebase deploy --non-interactive --project albums-test-a0356
 
   deploy-main:
@@ -45,7 +52,14 @@ jobs:
       - name: Install Firebase CLI
         run: npm install --global firebase-tools
 
-      - name: Deploy to main Firebase project
+      - name: Authenticate to Google Cloud (prod)
         env:
-          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+          FIREBASE_SERVICE_ACCOUNT_PROD: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_PROD }}
+        run: |
+          cat <<'EOF' > "$RUNNER_TEMP/gcp-prod-service-account.json"
+          $FIREBASE_SERVICE_ACCOUNT_PROD
+          EOF
+          echo "GOOGLE_APPLICATION_CREDENTIALS=$RUNNER_TEMP/gcp-prod-service-account.json" >> "$GITHUB_ENV"
+
+      - name: Deploy to main Firebase project
         run: firebase deploy --non-interactive --project albums-a9952
