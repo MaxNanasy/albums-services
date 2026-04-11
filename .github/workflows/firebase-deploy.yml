@@ -8,14 +8,14 @@ on:
 
 jobs:
   deploy-test:
-    name: Deploy to albums-test-a0356
+    name: Deploy to Albums - Test project
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout
         uses: actions/checkout@v5
 
-      - name: Setup Node.js
+      - name: Set up Node.js
         uses: actions/setup-node@v5
         with:
           node-version: '24'
@@ -23,22 +23,22 @@ jobs:
       - name: Install Firebase CLI
         run: npm install --global firebase-tools
 
-      - name: Install production dependencies
+      - name: Install runtime dependencies
         run: npm ci --production
         working-directory: functions
 
-      - name: Authenticate to Google Cloud (test)
+      - name: Set up Google Cloud authentication
         env:
           FIREBASE_SERVICE_ACCOUNT_TEST: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_TEST }}
         run: |
           printf '%s' "$FIREBASE_SERVICE_ACCOUNT_TEST" > "$RUNNER_TEMP/gcp-test-service-account.json"
           echo "GOOGLE_APPLICATION_CREDENTIALS=$RUNNER_TEMP/gcp-test-service-account.json" >> "$GITHUB_ENV"
 
-      - name: Deploy to test Firebase project
+      - name: Deploy to Albums - Test project
         run: firebase deploy --non-interactive --project albums-test-a0356
 
-  deploy-main:
-    name: Deploy to albums-a9952
+  deploy-prod:
+    name: Deploy to Albums project
     if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
 
@@ -46,7 +46,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v5
 
-      - name: Setup Node.js
+      - name: Set up Node.js
         uses: actions/setup-node@v5
         with:
           node-version: '24'
@@ -54,16 +54,16 @@ jobs:
       - name: Install Firebase CLI
         run: npm install --global firebase-tools
 
-      - name: Install production dependencies
+      - name: Install runtime dependencies
         run: npm ci --production
         working-directory: functions
 
-      - name: Authenticate to Google Cloud (prod)
+      - name: Set up Google Cloud authentication
         env:
           FIREBASE_SERVICE_ACCOUNT_PROD: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_PROD }}
         run: |
           printf '%s' "$FIREBASE_SERVICE_ACCOUNT_PROD" > "$RUNNER_TEMP/gcp-prod-service-account.json"
           echo "GOOGLE_APPLICATION_CREDENTIALS=$RUNNER_TEMP/gcp-prod-service-account.json" >> "$GITHUB_ENV"
 
-      - name: Deploy to main Firebase project
+      - name: Deploy to Albums project
         run: firebase deploy --non-interactive --project albums-a9952
