@@ -25,6 +25,10 @@ jobs:
       - name: Run tsc
         run: npx tsc
 
+      - name: Run tsc for tests
+        if: hashFiles('functions/tests/tsconfig.json') != ''
+        run: npx tsc --project tests/tsconfig.json
+
   type-coverage:
     runs-on: ubuntu-latest
     defaults:
@@ -45,3 +49,7 @@ jobs:
 
       - name: Run type-coverage
         run: npx type-coverage
+
+      - name: Run type-coverage for tests
+        if: hashFiles('functions/tests/tsconfig.json') != ''
+        run: npx type-coverage --project tests/tsconfig.json
