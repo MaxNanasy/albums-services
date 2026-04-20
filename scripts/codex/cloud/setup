@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+set -x
+
+(
+  cd functions
+  npm install --no-save --no-audit
+)
